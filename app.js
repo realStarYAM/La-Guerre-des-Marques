@@ -4,6 +4,27 @@
  */
 
 // ========== CONFIG ==========
+// Exemple de structure de chapitre pour documenter le moteur de pages.
+// Chaque page contient un titre et une liste de "blocks" (cards à rendre dans l'ordre).
+// Un block peut embarquer un effet sonore via la clé "sfx" (shock déclenché une seule fois).
+const SAMPLE_CHAPTER = {
+    id: 'ARCX_SAMPLE',
+    arc: 'arc1',
+    chapterNumber: 1,
+    title: 'Chapitre — Exemple',
+    subtitle: 'La rumeur enfle, les circuits se réveillent.',
+    pages: [
+        {
+            pageTitle: 'Page 1 — Incipit',
+            blocks: [
+                { type: 'big', tone: 'system', icon: '✨', text: 'Tout commence ici.' },
+                { type: 'card', tone: 'mystery', title: 'Signal faible', text: 'Un murmure passe entre les câbles.', sfx: 'asusLaugh' }
+            ]
+        }
+    ]
+};
+
+// Configuration d'arcs : un tableau d'assets (chapters) pour le moteur de rendu.
 const ARCS_CONFIG = {
     1: {
         id: 1, name: 'ARC 1', label: 'ARC 1', subtitle: "L'Aube du Chaos",
@@ -56,6 +77,7 @@ const DOM = {
     pageCurrent: document.getElementById('page-current'),
     pageTotal: document.getElementById('page-total'),
     progressBar: document.getElementById('progress-bar'),
+    progressPercent: document.getElementById('progress-percent'),
     btnBack: document.getElementById('btn-back'),
     btnRestart: document.getElementById('btn-restart'),
     btnPrev: document.getElementById('btn-prev'),
@@ -68,45 +90,50 @@ const DOM = {
 // ========== AUDIO MANAGER ==========
 const AudioManager = {
     ambient: null,
-    effect: null,
+    sfx: null,
     muted: true,
     volume: 0.25,
-    audioReady: false,
+    unlocked: false,
+    pendingAmbientArc: null,
+    shockPlayed: false,
+    pendingSFX: [],
 
     init() {
         this.muted = localStorage.getItem('gdm_audio_muted') !== 'false';
+        this.setupUnlock();
         this.updateIcon();
-        console.log('🔊 AudioManager initialisé, muted:', this.muted);
+    },
+
+    setupUnlock() {
+        const unlock = () => {
+            if (this.unlocked) return;
+            this.unlocked = true;
+            if (!this.muted && this.pendingAmbientArc) {
+                this.playAmbient(this.pendingAmbientArc);
+            }
+            const queued = [...this.pendingSFX];
+            this.pendingSFX = [];
+            queued.forEach(sfx => this.playSFX(sfx));
+            ['pointerdown', 'keydown'].forEach(evt => document.removeEventListener(evt, unlock));
+        };
+
+        ['pointerdown', 'keydown'].forEach(evt => document.addEventListener(evt, unlock));
     },
 
     async playAmbient(arcId) {
-        console.log('🎵 playAmbient appelé - arcId:', arcId, 'muted:', this.muted);
-        if (this.muted) {
-            console.log('🔇 Audio muté, pas de lecture');
-            return;
-        }
+        this.pendingAmbientArc = arcId;
+        if (this.muted || !this.unlocked) return;
         this.stopAmbient();
         const src = arcId === 1 ? './audio/arc1.mp3' : './audio/arc2.mp3';
-        console.log('🎵 Tentative de lecture:', src);
         try {
             this.ambient = new Audio(src);
             this.ambient.loop = true;
             this.ambient.volume = 0;
 
-            // Ajouter des listeners pour le diagnostic
-            this.ambient.addEventListener('canplaythrough', () => {
-                console.log('✅ Audio prêt à jouer');
-                this.audioReady = true;
-            });
-            this.ambient.addEventListener('error', (e) => {
-                console.error('❌ Erreur audio:', e.target.error);
-            });
-
             await this.ambient.play();
-            console.log('▶️ Lecture audio démarrée');
             this.fadeIn(this.ambient, this.volume);
         } catch (e) {
-            console.error('❌ Erreur lecture audio:', e.message, e);
+            console.error('❌ Erreur lecture audio:', e.message);
         }
     },
 
@@ -119,21 +146,39 @@ const AudioManager = {
         }
     },
 
-    playEffect(tone) {
+    stopSFX() {
+        if (this.sfx) {
+            this.sfx.pause();
+            this.sfx = null;
+        }
+    },
+
+    playSFX(type) {
+        if (!this.unlocked) {
+            if (!this.pendingSFX.includes(type)) this.pendingSFX.push(type);
+            return;
+        }
         if (this.muted) return;
-        const effects = {
-            danger: './audio/shock.mp3',
-            mystery: './audio/glitch.mp3',
-            life: './audio/heartbeat.mp3'
+
+        const sfxMap = {
+            shock: { src: './audio/shock.mp3', once: true },
+            asusLaugh: { src: './audio/oh-no-no-no-no-laugh.mp3', volume: 0.7 }
         };
-        const src = effects[tone];
-        if (!src) return;
-        if (this.effect) { this.effect.pause(); this.effect = null; }
+
+        const config = sfxMap[type];
+        if (!config) return;
+        if (config.once && this.shockPlayed) return;
+
+        this.stopSFX();
+
         try {
-            this.effect = new Audio(src);
-            this.effect.volume = this.volume * 0.6;
-            this.effect.play();
-        } catch (e) { }
+            this.sfx = new Audio(config.src);
+            this.sfx.volume = (config.volume ?? 0.8) * this.volume;
+            this.sfx.play();
+            if (type === 'shock') this.shockPlayed = true;
+        } catch (e) {
+            console.error('❌ Erreur SFX:', e.message);
+        }
     },
 
     toggleMute() {
@@ -284,11 +329,6 @@ function renderBlock(block) {
     const tone = block.tone || 'neutral';
     const toneClass = `tone-${tone}`;
 
-    // Jouer effet sonore selon le tone
-    if (block.tone === 'danger' || block.tone === 'mystery' || block.tone === 'life') {
-        setTimeout(() => AudioManager.playEffect(block.tone), 200);
-    }
-
     switch (block.type) {
         case 'card':
             return `<div class="block-card ${toneClass}">
@@ -352,6 +392,15 @@ function renderBlock(block) {
     }
 }
 
+function handlePageAudio(page) {
+    const triggered = new Set();
+    (page.blocks || []).forEach(block => {
+        if (!block.sfx || triggered.has(block.sfx)) return;
+        triggered.add(block.sfx);
+        setTimeout(() => AudioManager.playSFX(block.sfx), block.sfxDelay ?? 150);
+    });
+}
+
 // ========== PAGE RENDERING ==========
 function renderPage() {
     if (!currentChapterData || !currentChapterData.pages) return;
@@ -366,14 +415,17 @@ function renderPage() {
 
     const total = currentChapterData.pages.length;
     const current = currentPageIndex + 1;
+    const percent = Math.round((current / total) * 100);
 
     DOM.pageCurrent.textContent = current;
     DOM.pageTotal.textContent = total;
-    DOM.progressBar.style.width = `${(current / total) * 100}%`;
+    DOM.progressBar.style.width = `${percent}%`;
+    if (DOM.progressPercent) DOM.progressPercent.textContent = `${percent}%`;
 
     DOM.btnPrev.disabled = currentPageIndex === 0;
     DOM.btnNext.disabled = currentPageIndex >= total - 1;
 
+    handlePageAudio(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     saveProgress();
 }
@@ -387,6 +439,11 @@ function showPortal() {
     DOM.portal.classList.remove('hidden');
     document.querySelectorAll('.arc-cards').forEach(el => el.classList.remove('hidden'));
     checkResume();
+}
+
+function loadArc(arcId) {
+    showChapterSelect(arcId);
+    AudioManager.playAmbient(arcId);
 }
 
 function showChapterSelect(arcId) {
@@ -483,7 +540,7 @@ async function resumeReading() {
 // ========== EVENTS ==========
 function initEvents() {
     document.querySelectorAll('.arc-card').forEach(card => {
-        card.addEventListener('click', () => showChapterSelect(parseInt(card.dataset.arc)));
+        card.addEventListener('click', () => loadArc(parseInt(card.dataset.arc)));
     });
 
     DOM.btnBackPortal.addEventListener('click', showPortal);
