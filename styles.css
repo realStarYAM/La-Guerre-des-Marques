@@ -813,12 +813,28 @@ body {
 .progress-text {
     font-size: .8rem;
     color: var(--text-secondary);
-    margin-bottom: .35rem
+    margin-bottom: .35rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    justify-content: center
 }
 
 .progress-text span:first-child {
     font-weight: 600;
     color: var(--text-primary)
+}
+
+.progress-percent {
+    display: inline-flex;
+    align-items: center;
+    padding: .12rem .5rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    font-weight: 600;
+    background: var(--bg-glass);
+    color: var(--text-primary);
+    letter-spacing: .04em
 }
 
 .progress-bar-container {
