@@ -29,10 +29,43 @@ const ARCS_CONFIG = {
             { file: 'ARC2_06-chapitre5.js', title: 'Chapitre 5 — L\'Écho de l\'Abîme' },
             { file: 'ARC2_07-chapitre6.js', title: 'Chapitre 6 — L\'Entité Hybride' }
         ]
+    },
+    3: {
+        id: 3, name: 'ARC 3', label: 'ARC 3', subtitle: "L'Obscurité Finale",
+        folder: './chapters/arc3',
+        chapters: [
+            { file: 'ARC3_01-prologue.js', title: 'Prologue — L\'Obscurité Finale' },
+            { file: 'ARC3_02-chapitre1.js', title: 'Chapitre 1 — Le Rituel des Ombres' },
+            { file: 'ARC3_03-chapitre2.js', title: 'Chapitre 2 — La Fusion Finale' }
+        ]
+    },
+    4: {
+        id: 4, name: 'ARC 4', label: 'ARC 4', subtitle: 'Aero Dreams',
+        folder: './chapters/arc4',
+        chapters: [
+            { file: 'ARC4_01-prologue.js', title: 'Prologue — Aero Restart' },
+            { file: 'ARC4_02-chapitre1.js', title: 'Chapitre 1 — UAC : Demande d\'Autorisation' },
+            { file: 'ARC4_03-chapitre2.js', title: 'Chapitre 2 — Media Center Dreams' },
+            { file: 'ARC4_04-chapitre3.js', title: 'Chapitre 3 — Le Registre Corrompu' },
+            { file: 'ARC4_05-chapitre4.js', title: 'Chapitre 4 — Dreamscene Dimension' },
+            { file: 'ARC4_06-chapitre5.js', title: 'Chapitre 5 — L\'Ascension Aero' },
+            { file: 'ARC4_07-chapitre6.js', title: 'Chapitre 6 — La Rupture' }
+        ]
+    },
+    5: {
+        id: 5, name: 'ARC 5', label: 'ARC 5', subtitle: 'Les Ténèbres Intérieures',
+        folder: './chapters/arc5',
+        chapters: [
+            { file: 'ARC5_01-prologue.js', title: 'Prologue — Les Ténèbres Intérieures' },
+            { file: 'ARC5_02-chapitre1.js', title: 'Chapitre 1 — Manipulation Systémique' },
+            { file: 'ARC5_03-chapitre2.js', title: 'Chapitre 2 — Le Témoin' },
+            { file: 'ARC5_04-chapitre3.js', title: 'Chapitre 3 — La Confrontation' }
+        ]
     }
 };
 
 // ========== STATE ==========
+
 let currentArcId = null;
 let currentChapterIndex = 0;
 let currentPageIndex = 0;
@@ -98,12 +131,17 @@ const AudioManager = {
         'tuesmaladeHp': './audio/tuesmaladeouquoi-comme-asus-ma-fait-pipi.mp3',
         'gigabyteMsiLaugh': './audio/gigabyte-msi-laugh.mp3',
         'acerOhNo': './audio/acer-oh-no.mp3',
-        'listenToMe': './audio/listen-to-me.mp3'
+        'listenToMe': './audio/listen-to-me.mp3',
+        // ARC 4 Chapitre 6 - La rage d'Acer
+        'acerRage': './audio/TagueuleTuesdemerdemsi.mp3'
     },
 
     ambientMap: {
         1: './audio/arc1.mp3',
-        2: './audio/arc2.mp3'
+        2: './audio/arc2.mp3',
+        3: './audio/arc3.mp3',
+        4: './audio/arc4.mp3',
+        5: './audio/arc5.mp3'
     },
 
     // ========== INITIALISATION ==========
@@ -277,7 +315,15 @@ const AudioManager = {
         try {
             // Reset position et volume
             audio.currentTime = 0;
-            audio.volume = Math.min(1, Math.max(0, volume * this.volume * 2));
+
+            // Cas spécial : acerRage = volume MAX + coupe la musique
+            if (name === 'acerRage') {
+                this.stopAmbient(); // Couper la musique de fond
+                audio.volume = 1.0; // Volume MAXIMUM
+                console.log('🔥 MODE RAGE ACTIVÉ - Volume MAX, musique coupée !');
+            } else {
+                audio.volume = Math.min(1, Math.max(0, volume * this.volume * 2));
+            }
 
             // Lecture
             const playPromise = audio.play();
@@ -364,7 +410,10 @@ const AudioManager = {
 
     // Alias pour compatibilité
     playArcMusic(arcName) {
-        const arcId = arcName === 'arc1' ? 1 : 2;
+        const arcId = arcName === 'arc1' ? 1 :
+            arcName === 'arc2' ? 2 :
+                arcName === 'arc3' ? 3 :
+                    arcName === 'arc4' ? 4 : 5;
         this.playAmbient(arcId);
     },
 
@@ -793,6 +842,10 @@ function init() {
     CinemaMode.init();
     initEvents();
     checkResume();
+
+    // Exposer AudioManager globalement pour les chapitres (onPageChange hooks)
+    window.AudioManager = AudioManager;
+
     console.log('✅ Prêt');
 }
 

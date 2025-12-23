@@ -155,7 +155,8 @@ export default {
                     type: "big",
                     tone: "danger",
                     icon: "😭",
-                    text: "Oh no... Oh no... Oh no no no no no..."
+                    text: "Oh no... Oh no... Oh no no no no no...",
+                    sfx: "acerOhNo"
                 },
                 {
                     type: "card",

@@ -19,6 +19,10 @@
     --arc1-glow: rgba(255, 107, 53, .5);
     --arc2-primary: #8b5cf6;
     --arc2-glow: rgba(139, 92, 246, .5);
+    --arc3-primary: #1a1a2e;
+    --arc3-glow: rgba(26, 26, 46, .8);
+    --arc4-primary: #00adef;
+    --arc4-glow: rgba(0, 173, 239, .6);
     --font-display: 'Orbitron', sans-serif;
     --font-body: 'Inter', sans-serif;
     --transition-fast: 150ms ease;
@@ -215,6 +219,18 @@ body {
 
 .arc-card-2 .arc-card-glow {
     box-shadow: 0 0 50px var(--arc2-glow), inset 0 0 30px var(--arc2-glow)
+}
+
+.arc-card-3 .arc-card-glow {
+    box-shadow: 0 0 50px rgba(0, 0, 0, .9), inset 0 0 30px rgba(50, 50, 50, .7)
+}
+
+.arc-card-4 .arc-card-glow {
+    box-shadow: 0 0 50px var(--arc4-glow), inset 0 0 30px var(--arc4-glow)
+}
+
+.arc-card-5 .arc-card-glow {
+    box-shadow: 0 0 50px rgba(139, 0, 0, .7), inset 0 0 30px rgba(139, 0, 0, .5)
 }
 
 .arc-card-content {
