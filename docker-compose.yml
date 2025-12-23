@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  guerre-des-marques:
+    build: .
+    container_name: guerre-des-marques
+    ports:
+      - "8080:80"
+    restart: unless-stopped
