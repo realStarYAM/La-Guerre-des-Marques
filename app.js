@@ -59,7 +59,13 @@ const ARCS_CONFIG = {
             { file: 'ARC5_01-prologue.js', title: 'Prologue — Les Ténèbres Intérieures' },
             { file: 'ARC5_02-chapitre1.js', title: 'Chapitre 1 — Manipulation Systémique' },
             { file: 'ARC5_03-chapitre2.js', title: 'Chapitre 2 — Le Témoin' },
-            { file: 'ARC5_04-chapitre3.js', title: 'Chapitre 3 — La Confrontation' }
+            { file: 'ARC5_04-chapitre3.js', title: 'Chapitre 3 — La Confrontation' },
+            {
+                id: 'ARC5_04',
+                file: 'ARC5_04-chapitre4.js',
+                title: "Chapitre 4 — Acer vole l'OS de Dell",
+                module: './chapters/arc5/ARC5_04-chapitre4.js'
+            }
         ]
     }
 };
@@ -133,7 +139,8 @@ const AudioManager = {
         'acerOhNo': './audio/acer-oh-no.mp3',
         'listenToMe': './audio/listen-to-me.mp3',
         // ARC 4 Chapitre 6 - La rage d'Acer
-        'acerRage': './audio/TagueuleTuesdemerdemsi.mp3'
+        'acerRage': './audio/TagueuleTuesdemerdemsi.mp3',
+        'noGodPleaseNo': './audio/NO-GOD-PLEASE-NO.mp3'
     },
 
     ambientMap: {
