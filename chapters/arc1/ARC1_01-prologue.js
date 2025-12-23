@@ -25,7 +25,7 @@ export default {
             pageTitle: "Page 3 — Les Faibles 💀",
             blocks: [
                 { type: "card", tone: "mystery", icon: "🌑", title: "Dans l'ombre…", text: "HP et Lenovo échangent des données. Silencieux. Stratégiques. Mortellement précis." },
-                { type: "banner", tone: "danger", title: "Les premiers à tomber", icons: ["💻", "🔔"], labels: ["Acer", "Packard Bell"], sfx: "shock" },
+                { type: "banner", tone: "danger", title: "Les premiers à tomber", icons: ["💻", "🔔"], labels: ["Acer", "Packard Bell"] },
                 { type: "quote", tone: "danger", who: "Narrateur", text: "Les oubliés. Les faibles. Ils ne le savent pas encore, mais leur destin est scellé." }
             ]
         },
@@ -34,8 +34,7 @@ export default {
             blocks: [
                 { type: "big", tone: "danger", icon: "⚔️", text: "La guerre n'a pas encore commencé." },
                 { type: "big", tone: "mystery", icon: "🌀", text: "Mais elle est inévitable." },
-                { type: "card", tone: "system", icon: "⏱️", title: "FIN DU PROLOGUE", text: "Les lumières clignotent. Le compte à rebours commence." },
-                { type: "card", tone: "system", icon: "🧠", title: "ASUS observe en silence", text: "Un rire presque inaudible résonne dans le vide. Le dominant veille.", sfx: "asusLaugh", sfxDelay: 400 }
+                { type: "card", tone: "system", icon: "⏱️", title: "FIN DU PROLOGUE", text: "Les lumières clignotent. Le compte à rebours commence." }
             ]
         }
     ]

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
     <meta name="description" content="L'univers narratif épique des Marques technologiques.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- ========== PORTAIL ========== -->
     <main id="portal" class="portal">
@@ -29,6 +33,14 @@
                 </button>
             </div>
 
+            <!-- Bouton Activer le son -->
+            <div id="audio-unlock-banner" class="audio-unlock-banner">
+                <button id="btn-unlock-audio" class="btn-unlock-audio">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <span>Activer le son</span>
+                </button>
+            </div>
+
             <!-- ARC Cards -->
             <section class="arc-cards">
                 <article class="arc-card arc-card-1" data-arc="1">
@@ -37,7 +49,7 @@
                         <div class="arc-card-icon">🔥</div>
                         <h2 class="arc-card-title">ARC 1</h2>
                         <p class="arc-card-subtitle">L'Aube du Chaos</p>
-                        <span class="arc-card-meta">4 chapitres</span>
+                        <span class="arc-card-meta">6 chapitres</span>
                         <button class="arc-card-btn">Lire l'Arc <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </article>
@@ -122,7 +134,6 @@
             <div class="progress-section">
                 <div class="progress-text">
                     <span>Page <span id="page-current">1</span> / <span id="page-total">5</span></span>
-                    <span id="progress-percent" class="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar-container">
                     <div id="progress-bar" class="progress-bar"></div>
@@ -143,4 +154,5 @@
 
     <script type="module" src="app.js"></script>
 </body>
+
 </html>

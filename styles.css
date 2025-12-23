@@ -131,6 +131,55 @@ body {
     color: var(--arc2-primary)
 }
 
+/* AUDIO UNLOCK BUTTON */
+.audio-unlock-banner {
+    margin-bottom: 1.5rem;
+    text-align: center
+}
+
+.btn-unlock-audio {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .7rem 1.5rem;
+    background: linear-gradient(135deg, var(--arc2-primary), var(--arc1-primary));
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    animation: pulseAudio 2s ease-in-out infinite
+}
+
+.btn-unlock-audio:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 30px rgba(139, 92, 246, 0.6)
+}
+
+.btn-unlock-audio i {
+    font-size: 1.1rem
+}
+
+.audio-unlock-banner.hidden {
+    display: none
+}
+
+@keyframes pulseAudio {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 30px rgba(255, 107, 53, 0.5);
+    }
+}
+
 /* ARC CARDS */
 .arc-cards {
     display: grid;
@@ -813,28 +862,12 @@ body {
 .progress-text {
     font-size: .8rem;
     color: var(--text-secondary);
-    margin-bottom: .35rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    justify-content: center
+    margin-bottom: .35rem
 }
 
 .progress-text span:first-child {
     font-weight: 600;
     color: var(--text-primary)
-}
-
-.progress-percent {
-    display: inline-flex;
-    align-items: center;
-    padding: .12rem .5rem;
-    border: 1px solid var(--border-subtle);
-    border-radius: 999px;
-    font-weight: 600;
-    background: var(--bg-glass);
-    color: var(--text-primary);
-    letter-spacing: .04em
 }
 
 .progress-bar-container {
@@ -1024,5 +1057,62 @@ body {
         right: .5rem;
         padding: .5rem .75rem;
         font-size: .75rem
+    }
+}
+
+/* ========== ANIMATIONS SFX ========== */
+
+/* Animation Shake pour les moments de choc */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+.shake-animation {
+    animation: shake 0.6s ease-in-out;
+}
+
+/* Glow rouge intense pour les blocks danger */
+.danger-glow {
+    box-shadow:
+        0 0 20px var(--tone-danger-glow),
+        0 0 40px var(--tone-danger-glow),
+        inset 0 0 15px rgba(255, 71, 87, 0.1) !important;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 20px var(--tone-danger-glow),
+            0 0 40px var(--tone-danger-glow),
+            inset 0 0 15px rgba(255, 71, 87, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px var(--tone-danger-glow),
+            0 0 60px var(--tone-danger-glow),
+            inset 0 0 25px rgba(255, 71, 87, 0.15);
     }
 }
