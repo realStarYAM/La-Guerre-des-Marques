@@ -62,6 +62,27 @@ const ARCS_CONFIG = {
             { file: 'ARC5_04-chapitre3.js', title: 'Chapitre 3 — La Confrontation' },
             { file: 'ARC5_05-chapitre4.js', title: 'Chapitre 4 — Acer vole l\'OS de Dell' }
         ]
+    },
+    6: {
+        id: 6, name: 'ARC 6', label: 'ARC 6', subtitle: 'Le Chaos Final',
+        folder: './chapters/arc6',
+        chapters: [
+            { file: 'ARC6_01-chapitre1.js', title: 'Chapitre 1 — Le Retour du Karma' },
+            { file: 'ARC6_02-chapitre2.js', title: 'Chapitre 2 — Les Marques Paniquent' },
+            { file: 'ARC6_03-chapitre3.js', title: 'Chapitre 3 — Le Silence' },
+            { file: 'ARC6_04-chapitre4.js', title: 'Chapitre 4 — Le Jugement' },
+            { file: 'ARC6_05-chapitre5.js', title: 'Chapitre 5 — Fin Alternative' }
+        ]
+    },
+    7: {
+        id: 7, name: 'ARC 7', label: 'ARC 7', subtitle: 'La Tempête',
+        folder: './chapters/arc7',
+        chapters: [
+            { file: 'ARC7_01-prologue.js', title: 'Prologue — La Tempête Arrive' },
+            { file: 'ARC7_02-chapitre1.js', title: 'Chapitre 1 — Packard Bell Contre-Attaque' },
+            { file: 'ARC7_03-chapitre2.js', title: 'Chapitre 2 — L\'Attaque Surprise' },
+            { file: 'ARC7_04-chapitre3.js', title: 'Chapitre 3 — La Riposte' }
+        ]
     }
 };
 
@@ -144,7 +165,9 @@ const AudioManager = {
         2: './audio/arc2.mp3',
         3: './audio/arc3.mp3',
         4: './audio/arc4.mp3',
-        5: './audio/arc5.mp3'
+        5: './audio/arc5.mp3',
+        6: './audio/arc6.mp3',
+        7: './audio/arc7.mp3'
     },
 
     // ========== INITIALISATION ==========
@@ -416,7 +439,8 @@ const AudioManager = {
         const arcId = arcName === 'arc1' ? 1 :
             arcName === 'arc2' ? 2 :
                 arcName === 'arc3' ? 3 :
-                    arcName === 'arc4' ? 4 : 5;
+                    arcName === 'arc4' ? 4 :
+                        arcName === 'arc5' ? 5 : 6;
         this.playAmbient(arcId);
     },
 

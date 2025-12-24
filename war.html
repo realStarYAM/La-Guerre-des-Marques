@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ WAR — Guerre des Marques</title>
+    <meta name="description" content="Mini-jeu de combat entre marques tech">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="war_style.css">
+    <link rel="stylesheet" href="gallery_styles.css">
+</head>
+
+<body>
+    <!-- Particules de fond -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <a href="index.html" class="back-button" title="Retour à La Guerre des Marques">
+                ⬅ Retour
+            </a>
+            <div class="logo-container">
+                <span class="logo-icon">⚔️</span>
+            </div>
+        </header>
+
+        <!-- Titre principal -->
+        <div class="title-section">
+            <h1 class="main-title">
+                <span class="title-icon">⚔️</span> WAR
+            </h1>
+            <p class="subtitle">Guerre des Marques — Combat épique</p>
+        </div>
+
+        <!-- Zone de jeu principale -->
+        <main class="game-area" id="game-area">
+            <!-- Écran de sélection -->
+            <div class="setup-screen" id="setup-screen">
+                <div class="setup-card">
+                    <div class="setup-icon">🎮</div>
+                    <h2>Choisis ta Marque</h2>
+                    <p>Sélectionne la marque avec laquelle tu vas combattre !</p>
+
+                    <!-- Galerie des Combattants -->
+                    <div class="gallery-section">
+                        <h3>Galerie des Combattants</h3>
+
+                        <div class="selection-status" id="selection-status">
+                            <div class="status-player p1 empty" id="status-p1">
+                                <span class="status-label">J1</span>
+                                <span class="status-name">?</span>
+                            </div>
+                            <div class="status-vs">VS</div>
+                            <div class="status-player p2 empty" id="status-p2">
+                                <span class="status-label">J2</span>
+                                <span class="status-name">?</span>
+                            </div>
+                        </div>
+
+                        <div class="brand-gallery" id="brand-gallery">
+                            <!-- Les cartes seront générées ici par JS -->
+                        </div>
+
+                        <button class="reset-button hidden" id="reset-selection">
+                            🔄 Reset Sélection
+                        </button>
+                    </div>
+
+                    <!-- Sélecteur classique (caché ou gardé en fallback) -->
+                    <div class="brand-select-container hidden">
+                        <select class="brand-select" id="brand-select">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Acer">🖥️ Acer</option>
+                            <option value="Asus">💻 Asus</option>
+                            <option value="HP">🖨️ HP</option>
+                            <option value="Dell">📺 Dell</option>
+                            <option value="Lenovo">🔴 Lenovo</option>
+                            <option value="MSI">🐉 MSI</option>
+                            <option value="Apple">🍎 Apple</option>
+                            <option value="Samsung">🌌 Samsung</option>
+                            <option value="Razer">🐍 Razer</option>
+                            <option value="Microsoft">🪟 Microsoft</option>
+                        </select>
+                    </div>
+
+                    <button class="start-button" id="start-button" disabled>
+                        <span class="button-text">Lancer le Combat</span>
+                        <span class="button-icon">⚔️</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Écran de combat -->
+            <div class="battle-screen hidden" id="battle-screen">
+                <!-- HUD -->
+                <div class="battle-hud">
+                    <!-- Joueur -->
+                    <div class="fighter-panel player">
+                        <div class="fighter-avatar" id="player-avatar">🖥️</div>
+                        <div class="fighter-info">
+                            <h3 class="fighter-name" id="player-name">Joueur</h3>
+                            <div class="hp-bar-container">
+                                <div class="hp-bar player-hp" id="player-hp-bar"></div>
+                                <span class="hp-text" id="player-hp-text">100/100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VS -->
+                    <div class="vs-badge">
+                        <span class="vs-text">VS</span>
+                    </div>
+
+                    <!-- Ennemi -->
+                    <div class="fighter-panel enemy">
+                        <div class="fighter-avatar" id="enemy-avatar">💻</div>
+                        <div class="fighter-info">
+                            <h3 class="fighter-name" id="enemy-name">Ennemi</h3>
+                            <div class="hp-bar-container">
+                                <div class="hp-bar enemy-hp" id="enemy-hp-bar"></div>
+                                <span class="hp-text" id="enemy-hp-text">100/100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Log des événements -->
+                <div class="battle-log-container">
+                    <div class="battle-log" id="battle-log">
+                        <p class="log-entry system">⚔️ Que le combat commence !</p>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="action-buttons" id="action-buttons">
+                    <button class="action-btn attack" id="btn-attack">
+                        <span class="action-icon">⚔️</span>
+                        <span class="action-text">Attaquer</span>
+                    </button>
+                    <button class="action-btn defend" id="btn-defend">
+                        <span class="action-icon">🛡️</span>
+                        <span class="action-text">Défendre</span>
+                    </button>
+                    <button class="action-btn super" id="btn-super">
+                        <span class="action-icon">💥</span>
+                        <span class="action-text">Super</span>
+                        <span class="cooldown-badge hidden" id="cooldown-badge">3</span>
+                    </button>
+                </div>
+
+                <!-- Indicateur de tour -->
+                <div class="turn-indicator" id="turn-indicator">
+                    <span>Ton tour !</span>
+                </div>
+            </div>
+
+            <!-- Écran de fin -->
+            <div class="end-screen hidden" id="end-screen">
+                <div class="end-card" id="end-card">
+                    <div class="end-icon" id="end-icon">🏆</div>
+                    <h2 class="end-title" id="end-title">Victoire !</h2>
+                    <p class="end-description" id="end-description">Tu as écrasé ton adversaire !</p>
+
+                    <div class="end-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Dégâts infligés</span>
+                            <span class="stat-value" id="damage-dealt">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Dégâts reçus</span>
+                            <span class="stat-value" id="damage-taken">0</span>
+                        </div>
+                    </div>
+
+                    <div class="end-buttons">
+                        <button class="end-button replay" id="replay-button">
+                            <span>🔄 Rejouer</span>
+                        </button>
+                        <button class="end-button return" id="return-button">
+                            <span>🏠 Retour</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Mode Bonus — <strong>WAR ⚔️</strong></p>
+        </footer>
+    </div>
+
+    <script src="war_game.js"></script>
+</body>
+
+</html>

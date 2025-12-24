@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amour des Marques - Un mini-jeu romantique où les marques tech trouvent l'amour">
+    <title>💖 Amour des Marques</title>
+    <link rel="stylesheet" href="love_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Particules d'arrière-plan -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Conteneur principal -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <a href="index.html" class="back-button" title="Retour à La Guerre des Marques">
+                ⬅ Retour
+            </a>
+            <div class="logo-container">
+                <span class="logo-heart">💖</span>
+            </div>
+            <button class="stats-button" id="btn-stats" title="Statistiques">
+                📊 Stats
+            </button>
+        </header>
+
+        <!-- Panneau Stats (flottant) -->
+        <div class="stats-panel hidden" id="stats-panel">
+            <div class="stats-header">
+                <h3>📊 Statistiques</h3>
+                <button class="stats-close"
+                    onclick="document.getElementById('stats-panel').classList.add('hidden')">✕</button>
+            </div>
+            <div class="stats-content" id="stats-content">
+                <!-- Contenu généré par LoveStats.updatePanel() -->
+            </div>
+            <button class="reset-stats-btn" id="btn-reset-stats">🧹 Reset stats</button>
+        </div>
+
+        <!-- Titre principal -->
+        <div class="title-section">
+            <h1 class="main-title">
+                <span class="title-glow">💖</span> Amour des Marques
+            </h1>
+            <p class="subtitle">Quand la guerre s'arrête… l'amour commence.</p>
+        </div>
+
+        <!-- Zone de jeu principale -->
+        <main class="game-area" id="game-area">
+            <!-- Écran de démarrage -->
+            <div class="start-screen" id="start-screen">
+                <div class="start-card">
+                    <div class="start-icon">💕</div>
+                    <h2>Bienvenue dans l'Amour des Marques</h2>
+                    <p>Dans un monde où la guerre technologique fait rage, certaines marques cherchent... autre chose.
+                    </p>
+                    <p class="hint">Guidez les destins romantiques des plus grandes marques tech !</p>
+                    <button class="start-button" id="start-button">
+                        <span class="button-text">Commencer l'aventure</span>
+                        <span class="button-icon">💘</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zone de scène (cachée au départ) -->
+            <div class="scene-container hidden" id="scene-container">
+                <!-- Indicateur de progression -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+
+                <!-- Score d'amour -->
+                <div class="love-score" id="love-score">
+                    <span class="score-icon">💕</span>
+                    <span class="score-value" id="score-value">0</span>
+                </div>
+
+                <!-- Cartes des personnages -->
+                <div class="characters-display" id="characters-display">
+                    <div class="character-card left" id="char-left">
+                        <div class="char-avatar" id="avatar-left">🖥️</div>
+                        <div class="char-name" id="name-left">Marque 1</div>
+                    </div>
+                    <div class="love-indicator" id="love-indicator">
+                        <span class="heart-pulse">💓</span>
+                    </div>
+                    <div class="character-card right" id="char-right">
+                        <div class="char-avatar" id="avatar-right">💻</div>
+                        <div class="char-name" id="name-right">Marque 2</div>
+                    </div>
+                </div>
+
+                <!-- Zone de dialogue -->
+                <div class="dialogue-box" id="dialogue-box">
+                    <div class="speaker-name" id="speaker-name">Narrateur</div>
+                    <div class="dialogue-text" id="dialogue-text">
+                        <!-- Texte affiché progressivement ici -->
+                    </div>
+                    <div class="dialogue-indicator" id="dialogue-indicator">▼</div>
+                </div>
+
+                <!-- Boutons de choix -->
+                <div class="choices-container hidden" id="choices-container">
+                    <button class="choice-button approach" id="choice-approach" data-choice="approach">
+                        <span class="choice-icon">💕</span>
+                        <span class="choice-text">Approcher</span>
+                    </button>
+                    <button class="choice-button ignore" id="choice-ignore" data-choice="ignore">
+                        <span class="choice-icon">😳</span>
+                        <span class="choice-text">Ignorer</span>
+                    </button>
+                    <button class="choice-button reject" id="choice-reject" data-choice="reject">
+                        <span class="choice-icon">💔</span>
+                        <span class="choice-text">Rejeter</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Écran de fin (caché au départ) -->
+            <div class="end-screen hidden" id="end-screen">
+                <div class="end-card" id="end-card">
+                    <div class="end-icon" id="end-icon">💖</div>
+                    <h2 class="end-title" id="end-title">Fin</h2>
+                    <p class="end-description" id="end-description">Description de la fin</p>
+                    <div class="end-stats" id="end-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Score d'amour</span>
+                            <span class="stat-value" id="final-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Couples formés</span>
+                            <span class="stat-value" id="couples-formed">0</span>
+                        </div>
+                    </div>
+                    <div class="end-buttons">
+                        <button class="end-button replay" id="replay-button">
+                            <span>🔄</span> Rejouer
+                        </button>
+                        <button class="end-button return" id="return-button">
+                            <span>⚔️</span> Retour à la Guerre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Un spin-off de <strong>La Guerre des Marques</strong></p>
+        </footer>
+    </div>
+
+    <script src="love_game.js"></script>
+</body>
+
+</html>

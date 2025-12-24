@@ -233,6 +233,14 @@ body {
     box-shadow: 0 0 50px rgba(139, 0, 0, .7), inset 0 0 30px rgba(139, 0, 0, .5)
 }
 
+.arc-card-6 .arc-card-glow {
+    box-shadow: 0 0 50px rgba(255, 71, 87, .6), inset 0 0 30px rgba(255, 71, 87, .4)
+}
+
+.arc-card-7 .arc-card-glow {
+    box-shadow: 0 0 50px rgba(147, 112, 219, .7), inset 0 0 30px rgba(147, 112, 219, .5)
+}
+
 .arc-card-content {
     position: relative;
     background: var(--bg-card);
@@ -294,6 +302,275 @@ body {
 
 .arc-card:hover .arc-card-btn {
     background: rgba(255, 255, 255, .1)
+}
+
+/* BONUS SECTION - LOVE MODE */
+.bonus-section {
+    width: 100%;
+    max-width: 550px;
+    margin-top: 2rem;
+    text-align: center
+}
+
+.bonus-section-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: .1em
+}
+
+/* LOVE CARD */
+.love-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all 400ms ease;
+    overflow: hidden
+}
+
+.love-card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    transition: opacity 400ms ease;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 60px rgba(255, 105, 180, .5), inset 0 0 40px rgba(168, 85, 247, .3)
+}
+
+.love-card:hover .love-card-glow {
+    opacity: 1;
+    box-shadow: 0 0 80px rgba(255, 105, 180, .7), inset 0 0 50px rgba(168, 85, 247, .5)
+}
+
+.love-card-content {
+    position: relative;
+    background: linear-gradient(135deg, rgba(30, 15, 40, 0.95), rgba(40, 20, 50, 0.9));
+    border: 2px solid rgba(255, 105, 180, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    transition: all 400ms ease
+}
+
+.love-card:hover .love-card-content {
+    border-color: rgba(255, 105, 180, 0.6);
+    transform: translateY(-6px) scale(1.02)
+}
+
+.love-card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: heartbeat 1.5s infinite ease-in-out
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.15);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
+}
+
+.love-card-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FFB6C1, #FF69B4, #DDA0DD);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .25rem
+}
+
+.love-card-subtitle {
+    color: #DDA0DD;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: .5rem
+}
+
+.love-card-desc {
+    color: var(--text-secondary);
+    font-size: .9rem;
+    font-style: italic;
+    margin-bottom: 1.25rem
+}
+
+.love-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .65rem 1.5rem;
+    background: linear-gradient(135deg, #FF69B4, #9370DB);
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms ease;
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4)
+}
+
+.love-card:hover .love-card-btn {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(255, 105, 180, 0.6)
+}
+
+.love-card-btn i {
+    animation: heartbeat 1.5s infinite ease-in-out
+}
+
+/* BONUS CARDS GRID */
+.bonus-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem
+}
+
+@media (max-width: 600px) {
+    .bonus-cards-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* WAR CARD */
+.war-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all 400ms ease;
+    overflow: hidden
+}
+
+.war-card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    transition: opacity 400ms ease;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 60px rgba(230, 57, 70, .5), inset 0 0 40px rgba(255, 123, 0, .3)
+}
+
+.war-card:hover .war-card-glow {
+    opacity: 1;
+    box-shadow: 0 0 80px rgba(230, 57, 70, .7), inset 0 0 50px rgba(255, 123, 0, .5)
+}
+
+.war-card-content {
+    position: relative;
+    background: linear-gradient(135deg, rgba(40, 15, 15, 0.95), rgba(50, 20, 20, 0.9));
+    border: 2px solid rgba(230, 57, 70, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    transition: all 400ms ease
+}
+
+.war-card:hover .war-card-content {
+    border-color: rgba(230, 57, 70, 0.6);
+    transform: translateY(-6px) scale(1.02)
+}
+
+.war-card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: shake-war 2s infinite ease-in-out
+}
+
+@keyframes shake-war {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0);
+    }
+
+    10% {
+        transform: translateX(-2px) rotate(-5deg);
+    }
+
+    20% {
+        transform: translateX(2px) rotate(5deg);
+    }
+
+    30% {
+        transform: translateX(-2px) rotate(-3deg);
+    }
+
+    40% {
+        transform: translateX(2px) rotate(3deg);
+    }
+
+    50% {
+        transform: translateX(0) rotate(0);
+    }
+}
+
+.war-card-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff6b6b, #e63946, #ff7b00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .25rem
+}
+
+.war-card-subtitle {
+    color: #ff9999;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: .5rem
+}
+
+.war-card-desc {
+    color: var(--text-secondary);
+    font-size: .9rem;
+    font-style: italic;
+    margin-bottom: 1.25rem
+}
+
+.war-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .65rem 1.5rem;
+    background: linear-gradient(135deg, #e63946, #ff7b00);
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms ease;
+    box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4)
+}
+
+.war-card:hover .war-card-btn {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(230, 57, 70, 0.6)
+}
+
+.war-card-btn i {
+    animation: shake-war 2s infinite ease-in-out
 }
 
 /* CHAPTER SELECT */
